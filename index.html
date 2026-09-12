@@ -862,32 +862,138 @@ document.getElementById("caja-sig-nivel2")
 // SALTO DE LUIGI
 
 
-function saltarLuigi(){
+function iniciar(){
+
+const fantasma = document.getElementById("obstaculo-fantasma");
+
+let posicion = -30;
 
 
-const luigi =
-document.getElementById("luigi-player");
+loop = setInterval(function(){
+
+
+if(terminado){
+    return;
+}
+
+
+posicion += 6;
+
+
+fantasma.style.right = posicion + "px";
 
 
 
-if(!luigi.classList.contains("saltando")){
+// Cuando el fantasma llega al final
 
+if(posicion > 440){
 
-luigi.classList.add("saltando");
+    posicion = -30;
 
+    puntos++;
 
-
-setTimeout(()=>{
-
-
-luigi.classList.remove("saltando");
-
-
-},520);
-
+    document.getElementById("marcador").innerHTML =
+    "Esquiva: " + puntos + "/8";
 
 
 }
+
+
+
+// Revisar si Luigi está saltando
+
+let luigiSaltando =
+document.getElementById("luigi-player")
+.classList.contains("saltando");
+
+
+
+
+// Solo hay choque si NO está saltando
+
+if(!luigiSaltando){
+
+
+let cajaFantasma =
+fantasma.getBoundingClientRect();
+
+
+let cajaLuigi =
+document.getElementById("luigi-player")
+.getBoundingClientRect();
+
+
+
+if(
+
+cajaFantasma.left < cajaLuigi.right &&
+
+cajaFantasma.right > cajaLuigi.left &&
+
+cajaFantasma.top < cajaLuigi.bottom &&
+
+cajaFantasma.bottom > cajaLuigi.top
+
+){
+
+
+puntos = 0;
+
+
+document.getElementById("marcador").innerHTML =
+"Esquiva: 0/8";
+
+
+document.getElementById("frase-romantica")
+.style.display="block";
+
+
+document.getElementById("frase-romantica")
+.innerHTML =
+"👻 ¡El fantasma te atrapó!<br>Salta a tiempo Luigi 🎮";
+
+
+posicion = -30;
+
+
+}
+
+
+}
+
+
+
+
+// Ganar
+
+if(puntos >= 8){
+
+
+clearInterval(loop);
+
+
+terminado = true;
+
+
+
+document.getElementById("frase-romantica")
+.style.display="block";
+
+
+document.getElementById("frase-romantica")
+.innerHTML =
+"⭐ ¡Lo lograste Player 1! ⭐<br><br>Salvaste a tu princesa Amairany 💚🍄";
+
+
+
+document.getElementById("caja-sig-nivel2")
+.classList.remove("oculto");
+
+
+}
+
+
+},40);
 
 
 }
