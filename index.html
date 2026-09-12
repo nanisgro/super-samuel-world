@@ -862,26 +862,26 @@ document.getElementById("caja-sig-nivel2")
 // SALTO DE LUIGI
 
 
-function iniciar(){
+function saltarLuigi(){
 
-const fantasma = document.getElementById("obstaculo-fantasma");
-
-let posicion = -30;
+const luigi = document.getElementById("luigi-player");
 
 
-loop = setInterval(function(){
+if(!luigi.classList.contains("saltando")){
+
+luigi.classList.add("saltando");
 
 
-if(terminado){
-    return;
+setTimeout(function(){
+
+luigi.classList.remove("saltando");
+
+},520);
+
+
 }
 
-
-posicion += 6;
-
-
-fantasma.style.right = posicion + "px";
-
+    }
 
 
 // Cuando el fantasma llega al final
