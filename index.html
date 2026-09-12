@@ -1,140 +1,956 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Samuel World 🎮💚</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <style>
-        body {
-            margin: 0; padding: 0; background-color: #244116;
-            background-image: radial-gradient(#3a6b24 15%, transparent 16%), radial-gradient(#1c3311 15%, transparent 16%);
-            background-size: 30px 30px; background-position: 0 0, 15px 15px;
-            font-family: 'Press Start 2P', monospace; color: #ffffff;
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; overflow-x: hidden; text-align: center;
-        }
-        .contenedor-carta {
-            background-color: #4a2f13; border: 6px solid #5cb833; border-radius: 10px;
-            padding: 25px; max-width: 440px; width: 90%;
-            box-shadow: 0px 10px 0px #1a1006, 0px 20px 20px rgba(0,0,0,0.5);
-            position: relative; z-index: 10; margin: 20px 0;
-        }
-        h1 { font-size: 13px; color: #7ee940; line-height: 1.6; text-shadow: 2px 2px 0px #000; }
-        p { font-size: 10px; line-height: 1.8; color: #fffbdf; text-shadow: 1px 1px 0px #000; }
-        .botones { margin-top: 25px; display: flex; justify-content: space-around; align-items: center; position: relative; min-height: 60px; width: 100%; }
-        
-        button, .btn-link {
-            font-family: 'Press Start 2P', monospace; padding: 12px 15px; font-size: 10px;
-            border: 3px solid #000; border-radius: 5px; cursor: pointer; box-shadow: 0px 4px 0px #000;
-            background-color: #5cb833; color: white; text-decoration: none; display: inline-block;
-        }
-        button:active, .btn-link:active { transform: translateY(4px); box-shadow: 0px 0px 0px #000; }
-        
-        .btn-si-nv1 { background-color: #5cb833; color: white; padding: 12px 20px; z-index: 30; }
-        .btn-no-nv1 { background-color: #e52521; color: white; padding: 12px 20px; z-index: 30; position: relative; transition: transform 0.1s ease; }
-        .oculto { display: none !important; }
-        
-        #zona-juego { width: 100%; height: 160px; background: linear-gradient(#1cc2ff, #80e0ff); position: relative; overflow: hidden; border: 4px solid #000; margin-top: 15px; }
-        #piso-juego { position: absolute; bottom: 0; width: 100%; height: 20px; background-color: #cc6600; background-image: linear-gradient(90deg, #993300 50%, transparent 50%); background-size: 10px 10px; }
-        
-        /* Luigi Pixel Art */
-        #luigi-player { position: absolute; bottom: 20px; left: 40px; width: 24px; height: 38px; display: flex; flex-direction: column; align-items: center; }
-        .luigi-gorra { width: 20px; height: 6px; background-color: #4cb510; border: 2px solid #000; border-radius: 2px 2px 0 0; }
-        .luigi-cara { width: 16px; height: 10px; background-color: #ffdb99; border-left: 2px solid #000; border-right: 2px solid #000; position: relative; }
-        .luigi-cara::after { content: ""; position: absolute; right: 0; bottom: 2px; width: 6px; height: 4px; background-color: #000; }
-        .luigi-cuerpo { width: 20px; height: 16px; background: linear-gradient(to right, #4cb510 20%, #0055ff 21%, #0055ff 80%, #4cb510 81%); border: 2px solid #000; border-radius: 0 0 4px 4px; }
-        
-        /* Daisy Pixel Art */
-        #daisy-princess { position: absolute; bottom: 20px; right: 30px; width: 26px; height: 40px; display: flex; flex-direction: column; align-items: center; }
-        .daisy-corona { width: 14px; height: 6px; background-color: #ffea00; border: 2px solid #000; border-radius: 2px 2px 0 0; }
-        .daisy-pelo { width: 22px; height: 12px; background-color: #4a2711; border: 2px solid #000; display: flex; justify-content: center; align-items: flex-end; }
-        .daisy-cara { width: 14px; height: 10px; background-color: #c68642; }
-        .daisy-vestido { width: 24px; height: 16px; background: linear-gradient(#ffaa00, #ff7700); border: 2px solid #000; border-radius: 4px 4px 0 0; }
-        
-        #obstaculo-fantasma { position: absolute; bottom: 25px; right: -30px; width: 22px; height: 22px; background-color: #fff; border: 2px solid #000; border-radius: 50% 50% 0 0; }
-        #obstaculo-fantasma::before { content: "• •"; color: red; font-size: 10px; position: absolute; top: 4px; left: 4px; font-weight: bold; }
-        
-        .saltando { animation: saltoLuigi 0.52s cubic-bezier(0.25, 0.8, 0.25, 1); }
-        @keyframes saltoLuigi { 0%, 100% { bottom: 20px; } 50% { bottom: 100px; } }
-        
-        .hijo-hongo { position: absolute; font-size: 18px; animation: flotarHongo 4.5s linear infinite; opacity: 0; z-index: 1; }
-        @keyframes flotarHongo { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-        .reproductor { background: #222; border: 3px solid #ffeb3b; padding: 15px; border-radius: 8px; margin-top: 15px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Super Samuel World 🎮💚</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin:0;
+    padding:0;
+    background-color:#244116;
+    background-image:
+    radial-gradient(#3a6b24 15%, transparent 16%),
+    radial-gradient(#1c3311 15%, transparent 16%);
+    background-size:30px 30px;
+    background-position:0 0,15px 15px;
+
+    font-family:'Press Start 2P', monospace;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    min-height:100vh;
+    overflow-x:hidden;
+    text-align:center;
+}
+
+
+.contenedor-carta {
+
+    background-color:#4a2f13;
+
+    border:6px solid #5cb833;
+    border-radius:10px;
+
+    padding:25px;
+
+    max-width:440px;
+    width:90%;
+
+    box-shadow:
+    0px 10px 0px #1a1006,
+    0px 20px 20px rgba(0,0,0,.5);
+
+    position:relative;
+    z-index:10;
+
+    margin:20px 0;
+}
+
+
+h1 {
+
+    font-size:13px;
+    color:#7ee940;
+
+    line-height:1.6;
+
+    text-shadow:2px 2px 0px #000;
+}
+
+
+p {
+
+    font-size:10px;
+
+    line-height:1.8;
+
+    color:#fffbdf;
+
+    text-shadow:1px 1px 0px #000;
+
+}
+
+
+.botones {
+
+    margin-top:25px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    position:relative;
+
+    min-height:60px;
+
+}
+
+
+button,
+.btn-link {
+
+    font-family:'Press Start 2P', monospace;
+
+    padding:12px 15px;
+
+    font-size:10px;
+
+    border:3px solid #000;
+
+    border-radius:5px;
+
+    cursor:pointer;
+
+    box-shadow:0px 4px 0px #000;
+
+    background:#5cb833;
+
+    color:white;
+
+    text-decoration:none;
+
+}
+
+
+button:active,
+.btn-link:active {
+
+    transform:translateY(4px);
+
+    box-shadow:0 0 0 #000;
+
+}
+
+
+
+.btn-si-nv1 {
+
+    background:#5cb833;
+
+    padding:12px 20px;
+
+}
+
+
+
+.btn-no-nv1 {
+
+    background:#e52521;
+
+    padding:12px 20px;
+
+    position:relative;
+
+    transition:.1s;
+
+}
+
+
+.oculto {
+
+    display:none!important;
+
+}
+
+
+
+/* PERSONAJE LUIGI */
+
+.luigi-gorra {
+
+    width:20px;
+    height:6px;
+
+    background:#4cb510;
+
+    border:2px solid #000;
+
+}
+
+
+.luigi-cara {
+
+    width:16px;
+    height:10px;
+
+    background:#ffdb99;
+
+    border-left:2px solid #000;
+
+    border-right:2px solid #000;
+
+}
+
+
+.luigi-cuerpo {
+
+    width:20px;
+    height:16px;
+
+    background:
+    linear-gradient(
+    to right,
+    #4cb510 20%,
+    #0055ff 21%,
+    #0055ff 80%,
+    #4cb510 81%
+    );
+
+    border:2px solid #000;
+
+}
+
+
+
+/* JUEGO NIVEL 2 */
+
+
+#zona-juego {
+
+    width:100%;
+
+    height:160px;
+
+    background:
+    linear-gradient(#1cc2ff,#80e0ff);
+
+    position:relative;
+
+    overflow:hidden;
+
+    border:4px solid #000;
+
+}
+
+
+#piso-juego {
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:20px;
+
+    background:#cc6600;
+
+}
+
+
+
+#luigi-player {
+
+    position:absolute;
+
+    bottom:20px;
+
+    left:40px;
+
+}
+
+
+
+#obstaculo-fantasma {
+
+    position:absolute;
+
+    bottom:25px;
+
+    right:-30px;
+
+    width:22px;
+
+    height:22px;
+
+    background:white;
+
+    border:2px solid black;
+
+    border-radius:50% 50% 0 0;
+
+}
+
+
+#obstaculo-fantasma::before {
+
+content:"• •";
+
+color:red;
+
+position:absolute;
+
+top:4px;
+
+left:4px;
+
+}
+
+
+
+.saltando {
+
+animation:saltoLuigi .52s;
+
+}
+
+
+@keyframes saltoLuigi {
+
+0%,100%{
+bottom:20px;
+}
+
+50%{
+bottom:100px;
+}
+
+}
+
+
+.hijo-hongo {
+
+position:absolute;
+
+font-size:18px;
+
+animation:flotarHongo 4.5s linear;
+
+}
+
+
+@keyframes flotarHongo {
+
+0%{
+transform:translateY(110vh);
+}
+
+100%{
+transform:translateY(-10vh);
+}
+
+}
+
+
+
+.reproductor {
+
+background:#222;
+
+border:3px solid #ffeb3b;
+
+padding:15px;
+
+border-radius:8px;
+
+}
+
+
+
+</style>
+
 </head>
+
+
 <body>
-    <!-- NIVEL 1 -->
-    <div class="contenedor-carta" id="nivel1">
-        <div style="margin-bottom: 20px; display: inline-block; transform: scale(1.3);"><div class="luigi-gorra"></div><div class="luigi-cara"></div><div class="luigi-cuerpo"></div></div>
-        <h1>¡MAMMA MIA, SAMUEL!<br>¡CUMPLEAÑOS NIVEL 1!</h1>
-        <p>Cruzaría el Reino Champiñón entero, resolvería mil acertijos y vencería a Bowser solo por estar a tu lado...</p>
-        <p style="margin-top: 15px; color: #ffeb3b;">¿Me dejas ser tu eterna Player 2 y celebrar juntos? 🕹️</p>
-        <div class="botones" id="nivel1">
-            
-            <button class="btn-si-nv1" onclick="pasarNivel(1, 2)">¡SÍ! ⭐️</button>
-            <button class="btn-no-nv1" id="boton-no" onmouseover="esquivarBoton()">NO 🍄</button>
-        </div>
-    </div>
 
-    <!-- NIVEL 2 -->
-    <div class="contenedor-carta oculto" id="nivel2">
-        <h1>NIVEL 2: DIFICULTAD EXPERTO 👑</h1>
-        <p>¡Un fantasma veloz atrapó a tu princesa Amairany! Calcula bien tus saltos para esquivarlo.</p>
-        <div id="zona-juego"><div id="piso-juego"></div><div id="luigi-player"><div class="luigi-gorra"></div><div class="luigi-cara"></div><div class="luigi-cuerpo"></div></div><div id="daisy-princess"><div class="daisy-corona"></div><div class="daisy-pelo"><div class="daisy-cara"></div></div><div class="daisy-vestido"></div></div><div id="obstaculo-fantasma"></div></div>
-        <p id="marcador" style="margin-top: 15px; color: #ffeb3b;">Esquiva: 0/8</p>
-        <div class="botones" style="height: auto; margin-top: 10px;"><button onclick="saltarLuigi()" style="background-color: #ffeb3b; color: black; width: 100%;">¡SALTAR! 🎮</button></div>
-        
-        <p id="frase-romantica" style="margin-top: 15px; color: #ffeb3b; font-size: 10px; display: none; line-height: 1.6; font-weight: bold;"></p>
-        
-        <div class="botones oculto" id="caja-sig-nivel2" style="height: auto; margin-top: 10px;"><button onclick="pasarNivel(2, 3)" style="width: 100%;">SIGUIENTE NIVEL ➡️</button></div>
-    </div>
 
-    <!-- NIVEL 3 -->
-    <div class="contenedor-carta oculto" id="nivel3">
-        <h1 style="font-size: 16px; color:#ffeb3b;">🍄 MUNDO 3: NUESTRO FUTURO 🍄</h1>
-        <p>Samuel, mi amor por ti crece más que con un súper champiñón. Eres el hombre con el que quiero jugar todas las partidas de mi vida.</p>
-        <p style="margin-top: 12px; color: #a2ffa2;">Quiero construir un futuro real contigo, superar cada obstáculo tomados de la mano, envejecer a tu lado... ¡y llenar nuestro castillo de pequeños hijos champiñones igual de hermosos que tú!</p>
-        <div class="botones" style="height: auto; margin-top: 10px;"><button onclick="activarHongos(); pasarNivel(3, 4);" style="width: 100%;">MUNDO FINAL ⭐️</button></div>
-    </div>
+<!-- NIVEL 1 -->
 
-    <!-- NIVEL 4 -->
-    <div class="contenedor-carta oculto" id="nivel4">
-        <h1>🏆 ¡STAGE CLEAR, SAMUEL! 🏆</h1>
-        <p>¡Completaste todos los mundos! Tu princesa Amairany te ha preparado esta recompensa musical:</p>
-        <div class="reproductor">
-            <p style="color:#ffeb3b; margin-bottom: 15px; font-size: 11px;">🎵 TU PLAYLIST DE CUMPLEAÑOS 🎵</p>
-            <a href="https://youtube.com" target="_blank" class="btn-link" style="background-color: #ff3333; width: 80%;">ABRIR YOUTUBE MUSIC 🎧</a>
-        </div>
-        <p style="margin-top: 25px; font-size: 8px; color: #a2ffa2;">¡Feliz Cumpleaños al mejor Player 1! Te ama tu novia Amairany 💚👩🏽‍❤️‍👨🏻</p>
-    </div>
+<div class="contenedor-carta" id="nivel1">
 
-    <script>
-        let puntos = 0; let terminado = false; let loop;
-        
-        function pasarNivel(a, s) { 
-            document.getElementById('nivel' + a).classList.add('oculto'); 
-            document.getElementById('nivel' + s).classList.remove('oculto'); 
-            if(s === 2) iniciar(); 
-        }
-        
-        function esquivarBoton() { 
-            const b = document.getElementById('boton-no'); 
-            const xAleatorio = Math.floor(Math.random() * 160) - 80;
-            const yAleatorio = Math.floor(Math.random() * 40) - 20;
-            b.style.transform = `translate(${xAleatorio}px, ${yAleatorio}px)`;
-        }
-        
-        function iniciar() {
-            const f = document.getElementById('obstaculo-fantasma'); 
-            let pos = 440;
-            loop = setInterval(() => {
-                if (terminado) return; 
-                pos -= 11; 
-                if (pos < -30) { 
-                    pos = 440; 
-                    puntos++; 
-                    document.getElementById('marcador').innerText = "Esquiva: " + puntos + "/8"; 
-                    if (puntos >= 8) { 
-                        clearInterval(loop); 
-                        terminado = true; 
+
+<div style="transform:scale(1.3);margin-bottom:20px;">
+
+<div class="luigi-gorra"></div>
+
+<div class="luigi-cara"></div>
+
+<div class="luigi-cuerpo"></div>
+
+</div>
+
+
+
+<h1>
+¡MAMMA MIA, SAMUEL!<br>
+¡CUMPLEAÑOS NIVEL 1!
+</h1>
+
+
+<p>
+Cruzaría el Reino Champiñón entero,
+resolvería mil acertijos y vencería a Bowser
+solo por estar a tu lado...
+</p>
+
+
+<p style="color:#ffeb3b">
+
+¿Me dejas ser tu eterna Player 2 y celebrar juntos? 🕹️
+
+</p>
+
+
+<div class="botones">
+
+<button class="btn-si-nv1" onclick="pasarNivel(1,2)">
+¡SÍ! ⭐
+</button>
+
+
+<button class="btn-no-nv1" id="boton-no">
+NO 🍄
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- NIVEL 2 -->
+
+
+<div class="contenedor-carta oculto" id="nivel2">
+
+
+<h1>
+NIVEL 2: DIFICULTAD EXPERTO 👑
+</h1>
+
+
+<p>
+
+¡Un fantasma veloz atrapó a tu princesa Amairany!
+Calcula bien tus saltos para esquivarlo.
+
+</p>
+
+
+
+<div id="zona-juego">
+
+
+<div id="piso-juego"></div>
+
+
+<div id="luigi-player">
+
+<div class="luigi-gorra"></div>
+
+<div class="luigi-cara"></div>
+
+<div class="luigi-cuerpo"></div>
+
+</div>
+
+
+<div id="obstaculo-fantasma"></div>
+
+
+</div>
+
+
+
+<p id="marcador" style="color:#ffeb3b">
+
+Esquiva:0/8
+
+</p>
+
+
+<button onclick="saltarLuigi()">
+
+¡SALTAR! 🎮
+
+</button>
+
+
+
+<p id="frase-romantica" style="display:none;color:#ffeb3b">
+
+</p>
+
+
+
+<div class="botones oculto" id="caja-sig-nivel2">
+
+<button onclick="pasarNivel(2,3)">
+
+SIGUIENTE NIVEL ➡️
+
+</button>
+
+</div>
+
+
+</div>
+</div>
+
+
+<!-- NIVEL 3 -->
+
+<div class="contenedor-carta oculto" id="nivel3">
+
+
+<h1 style="color:#ffeb3b">
+
+🍄 MUNDO 3: NUESTRO FUTURO 🍄
+
+</h1>
+
+
+<p>
+
+Samuel, mi amor por ti crece más que un súper champiñón.
+Eres el hombre con el que quiero jugar todas las partidas de mi vida.
+
+</p>
+
+
+<p style="color:#a2ffa2">
+
+Quiero construir un futuro real contigo,
+superar cada obstáculo tomados de la mano,
+envejecer a tu lado...
+
+¡y llenar nuestro castillo de pequeños hijos
+champiñones igual de hermosos que tú! 💚
+
+</p>
+
+
+<div class="botones">
+
+<button onclick="activarHongos(); pasarNivel(3,4)">
+
+MUNDO FINAL ⭐
+
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- NIVEL 4 -->
+
+<div class="contenedor-carta oculto" id="nivel4">
+
+
+<h1>
+
+🏆 ¡STAGE CLEAR, SAMUEL! 🏆
+
+</h1>
+
+
+<p>
+
+¡Completaste todos los mundos!
+
+Tu princesa Amairany preparó esta recompensa especial:
+
+</p>
+
+
+
+
+<div class="reproductor">
+
+
+<p style="color:#ffeb3b">
+
+🎵 TU PLAYLIST DE CUMPLEAÑOS 🎵
+
+</p>
+
+
+<a 
+href="https://music.youtube.com/"
+target="_blank"
+class="btn-link"
+style="background:#ff3333;width:80%;">
+
+ABRIR YOUTUBE MUSIC 🎧
+
+</a>
+
+
+</div>
+
+
+
+
+
+<p style="color:#a2ffa2;margin-top:25px">
+
+💌 CARTA PARA MI PLAYER 1 💌
+
+</p>
+
+
+
+<p>
+
+Samuel,
+
+gracias por hacer mis días más felices.
+Contigo cada momento se siente como una nueva aventura
+en nuestro propio Reino Champiñón.
+
+No prometo que todo será perfecto,
+pero sí prometo caminar contigo,
+apoyarte y celebrar cada victoria a tu lado.
+
+Eres mi Player 1 favorito,
+y espero seguir creando muchos recuerdos contigo.
+
+Te quiero mucho. 💚
+
+<br><br>
+
+— Tu Player 2, Amairany ⭐
+
+</p>
+
+
+
+
+<p style="font-size:8px;color:#a2ffa2">
+
+¡Feliz cumpleaños al mejor Player 1! 🎮💚
+
+</p>
+
+
+</div>
+
+
+
+
+
+<!-- DECORACIÓN DE HONGOS -->
+
+<div id="hongos-container"></div>
+ <script>
+
+
+let puntos = 0;
+let terminado = false;
+let loop;
+
+
+
+// CAMBIAR DE NIVEL
+
+function pasarNivel(actual, siguiente){
+
+    document
+    .getElementById("nivel" + actual)
+    .classList.add("oculto");
+
+
+    document
+    .getElementById("nivel" + siguiente)
+    .classList.remove("oculto");
+
+
+    if(siguiente === 2){
+
+        iniciar();
+
+    }
+
+}
+
+
+
+
+// BOTÓN NO ESCAPA
+
+const botonNo = document.getElementById("boton-no");
+
+
+botonNo.addEventListener("mouseover", function(){
+
+
+let x = Math.floor(Math.random()*250)-125;
+
+let y = Math.floor(Math.random()*100)-50;
+
+
+botonNo.style.transform =
+`translate(${x}px,${y}px)`;
+
+
+});
+
+
+
+
+
+// INICIAR NIVEL DEL FANTASMA
+
+
+function iniciar(){
+
+
+const fantasma =
+document.getElementById("obstaculo-fantasma");
+
+
+let posicion = -30;
+
+
+
+loop = setInterval(function(){
+
+
+if(terminado){
+
+return;
+
+}
+
+
+
+posicion += 5;
+
+
+fantasma.style.right =
+posicion + "px";
+
+
+
+
+
+// CUANDO PASA A LUIGI
+
+if(posicion > 440){
+
+
+posicion = -30;
+
+
+puntos++;
+
+
+document.getElementById("marcador").innerHTML =
+"Esquiva: " + puntos + "/8";
+
+
+
+}
+
+
+
+
+
+// COLISIÓN
+
+
+let cajaFantasma =
+fantasma.getBoundingClientRect();
+
+
+let cajaLuigi =
+document.getElementById("luigi-player")
+.getBoundingClientRect();
+
+
+
+if(
+
+cajaFantasma.left < cajaLuigi.right &&
+
+cajaFantasma.right > cajaLuigi.left &&
+
+cajaFantasma.top < cajaLuigi.bottom &&
+
+cajaFantasma.bottom > cajaLuigi.top
+
+){
+
+
+puntos = 0;
+
+
+document.getElementById("marcador").innerHTML =
+"Esquiva: 0/8";
+
+
+
+document.getElementById("frase-romantica")
+.style.display="block";
+
+
+document.getElementById("frase-romantica")
+.innerHTML =
+"👻 ¡El fantasma te atrapó!<br>Salta más rápido Luigi 🎮";
+
+
+
+posicion = -30;
+
+
+
+}
+
+
+
+
+// GANAR
+
+
+if(puntos >= 8){
+
+
+clearInterval(loop);
+
+
+terminado = true;
+
+
+document.getElementById("frase-romantica")
+.style.display="block";
+
+
+document.getElementById("frase-romantica")
+.innerHTML =
+"⭐ ¡Lo lograste Player 1! ⭐<br><br>Salvaste a tu princesa Amairany 💚🍄";
+
+
+
+document.getElementById("caja-sig-nivel2")
+.classList.remove("oculto");
+
+}
+
+
+
+},40);
+
+
+}
+
+
+
+
+
+// SALTO DE LUIGI
+
+
+function saltarLuigi(){
+
+
+const luigi =
+document.getElementById("luigi-player");
+
+
+
+if(!luigi.classList.contains("saltando")){
+
+
+luigi.classList.add("saltando");
+
+
+
+setTimeout(()=>{
+
+
+luigi.classList.remove("saltando");
+
+
+},520);
+
+
+
+}
+
+
+}
+
+
+
+
+
+
+// HONGOS DEL FINAL
+
+
+function activarHongos(){
+
+
+
+for(let i=0;i<25;i++){
+
+
+
+let hongo =
+document.createElement("div");
+
+
+hongo.className="hijo-hongo";
+
+
+hongo.innerHTML="🍄";
+ 
+hongo.style.left =
+Math.random()*100 + "%";
+
+
+hongo.style.animationDelay =
+Math.random()*3 + "s";
+
+
+
+document.body.appendChild(hongo);
+
+
+
+setTimeout(()=>{
+
+
+hongo.remove();
+
+
+},5000);
+
+
+
+}
+
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
+
